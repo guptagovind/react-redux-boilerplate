@@ -12,7 +12,7 @@ class Base extends React.Component {
     return (
       <div>
         Hello,
-        Webpack 4!! How are you?
+        Welcome to the react app boilerplate!!
         <div className="test-image">
           {this.getTest()}
           myName:
