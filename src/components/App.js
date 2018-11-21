@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { IntlProvider } from 'react-intl';
 import { Router, Route, Switch } from 'react-router-dom';
 import createHistory from 'history/createBrowserHistory';
 import Base from './Base';
 import NotFoundPage from './NotFoundPage';
+import Messages from '../../config/lang/Messages';
 
 export const history = createHistory();
 
@@ -18,12 +22,26 @@ class App extends Component {
   );
 
   render() {
+    const { lang } = this.props;
     return (
-      <div>
-        {this.routes()}
-      </div>
+      <IntlProvider
+        locale={lang}
+        messages={Messages[lang]}
+      >
+        <div>
+          {this.routes()}
+        </div>
+      </IntlProvider>
     );
   }
 }
 
-export default App;
+App.propTypes = {
+  lang: PropTypes.string.isRequired
+};
+
+const mapStateToProps = state => ({
+  lang: state.Locale.lang
+});
+
+export default connect(mapStateToProps)(App);

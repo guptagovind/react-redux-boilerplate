@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
-import getData from '../actions/Actions';
+import { getData, setLocale } from '../actions/Actions';
 
 class Base extends React.Component {
   getTest = () => {
@@ -12,12 +13,22 @@ class Base extends React.Component {
     return (
       <div>
         Hello,
-        Welcome to the react app boilerplate!!
+        <FormattedMessage
+          id='Base.dashboard'
+          defaultMessage="Dashboard"
+        />
         <div className="test-image">
           {this.getTest()}
-          myName:
-          { this.props.myName }
+          <FormattedMessage
+            id='Base.myName'
+            defaultMessage='myName'
+          />
+          {/* myName: */}
+          {this.props.myName}
         </div>
+        <div role='presentation' onClick={() => this.props.setLocale('en')}>EN</div>
+        |
+        <div role='presentation' onClick={() => this.props.setLocale('ru')}>RU</div>
       </div>
     );
   }
@@ -25,7 +36,8 @@ class Base extends React.Component {
 
 Base.propTypes = {
   myName: PropTypes.string,
-  getData: PropTypes.func.isRequired
+  getData: PropTypes.func.isRequired,
+  setLocale: PropTypes.func.isRequired
 };
 
 
@@ -38,7 +50,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getData: () => dispatch(getData())
+  getData: () => dispatch(getData()),
+  setLocale: lang => dispatch(setLocale(lang))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Base);
